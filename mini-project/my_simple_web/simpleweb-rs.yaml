@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: simpleweb-rs
+spec:
+  replicas: 2
+  selector:
+    matchExpressions:
+    - key: app
+      operator: In
+      values: 
+        - simpleweb-rs
+    - key: access
+      operator: In
+      values: 
+        - public 
+  template:
+    metadata:
+      labels:
+        app: simpleweb-rs
+        access: public
+    spec:
+      containers:
+      - name: simple-web-php
+        image: mjwoo0/my-simple-web:1.0
+        volumeMounts:
+        - name: datastore
+          mountPath: /srv/datastore/simple-web-php/
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 15
+      volumes:
+      - name: datastore
+        persistentVolumeClaim:
+          claimName: simpleweb-datastore-pvc
