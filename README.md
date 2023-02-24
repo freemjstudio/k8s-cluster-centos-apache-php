@@ -8,4 +8,4 @@ Based Image : https://hub.docker.com/repository/docker/mjwoo0/my-simple-web/gene
 * Client 외부 접속    
 NodePort 30080을 사용하고 있어서 포트 번호 30080를 붙여 다음과 같이 접속한다. 
 
-192.169.56.11:30080 
+http://192.169.56.11:30080 
